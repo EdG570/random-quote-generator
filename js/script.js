@@ -13,6 +13,16 @@ var quotes = [
     quote: "Every artist was first an amateur",
     source: "Ralph Waldo Emerson",
     citation: "www.inspirational-quotes.info"
+  },
+  {
+    quote: "I was always looking outside myself for strength and confidence, but it comes from within. It is there all of the time.",
+    source: "Anna Freud",
+    citation: "www.inspirational-quotes.info"
+  },
+  {
+    quote: "You miss 100% of the shots you don't take.",
+    source: "Wayne Gretzky",
+    citation: "www.inspirational-quotes.info"
   }
 ];
 
@@ -50,10 +60,14 @@ var printQuote = function() {
   }
   else if (selectedQuote["year"] === undefined) {
     quoteString = '<p class="quote">' + selectedQuote["quote"] + '</p> <p class="source">' + selectedQuote["source"] + ' <span class="citation">' + selectedQuote["citation"] + '</span> </p>';
+  } 
+  else {
+    quoteString = '<p class="quote">' + selectedQuote["quote"] + '</p> <p class="source">' + selectedQuote["source"] + ' <span class="citation">' + selectedQuote["citation"] + '</span> <span class="year">' + selectedQuote["year"] + '</span> </p>';
   }
   document.getElementById('quote-box').innerHTML = quoteString;
 };
 
+// Changes quote every 10 seconds
 setInterval(function() { printQuote(); }, 10000);
 
 // event listener to respond to clicks on the page

@@ -1,7 +1,3 @@
-// event listener to respond to clicks on the page
-// when user clicks anywhere on the page, the "makeQuote" function is called
-//document.getElementById('loadQuote').addEventListener("click", printQuote, false);
-
 var quotes = [
   {
     quote: "The best preparation for tomorrow is doing your best today.",
@@ -20,21 +16,50 @@ var quotes = [
   }
 ];
 
+// variable for storing previous random number
+var lastRandomNumber = null;
+
+// Helper function that creates random numbers
+var getRandomNumber = function() {
+  var randomNumber = Math.floor(Math.random() * quotes.length);
+  var checkedRandomNum = checkNumber(randomNumber);
+  return checkedRandomNum;
+};
+
+// Checks to see if the last random number was the same as current
+var checkNumber = function(num) {
+  while (num === lastRandomNumber) {
+    num = getRandomNumber();
+  }
+  return num;
+}
+
 // Randomly selects a quote from the quotes arrray
 var getRandomQuote = function() {
-  var randomNumber = Math.floor(Math.random() * quotes.length);
+  var randomNumber = getRandomNumber();
+  lastRandomNumber = randomNumber;
   return quotes[randomNumber];
 };
 
+// Gets a random quote, builds a string, then displays content
 var printQuote = function() {
   var selectedQuote = getRandomQuote();
-  console.log(selectedQuote);
-  // if (selectedQuote["year"] === undefined && selectedQuote["citation"] === undefined) {
-    
-  // }
+  var quoteString = "";
+  if (selectedQuote["year"] === undefined && selectedQuote["citation"] === undefined) {
+    quoteString = '<p class="quote">' + selectedQuote["quote"] + '</p> <p class="source">' + selectedQuote["source"] + ' </p>';  
+  }
+  else if (selectedQuote["year"] === undefined) {
+    quoteString = '<p class="quote">' + selectedQuote["quote"] + '</p> <p class="source">' + selectedQuote["source"] + ' <span class="citation">' + selectedQuote["citation"] + '</span> </p>';
+  }
+  document.getElementById('quote-box').innerHTML = quoteString;
 };
 
-printQuote();
+setInterval(function() { printQuote(); }, 10000);
+
+// event listener to respond to clicks on the page
+// when user clicks anywhere on the page, the "makeQuote" function is called
+document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+
 
 
 
